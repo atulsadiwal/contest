@@ -3,6 +3,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import Top from './Top';
+import WhatsInStore from './WhatsInStore';
+import WhoCanParticipate from './WhoCanParticipate';
+import WhatsAtStake from './WhatsAtStake';
+import StickyFooter from './StickyFooter';
 
 const HomePage = () => {
     return (
@@ -45,6 +50,11 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+            <Top />
+            <WhatsInStore />
+            <WhoCanParticipate />
+            <WhatsAtStake />
+            <StickyFooter />
         </>
     );
 }

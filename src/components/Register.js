@@ -1,12 +1,37 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './Logo';
 
-const Register = () => {
+const Register = ({onSubmit}) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        mobile: '',
+        gender: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault(); 
+        setIsLoading(true);
+        await onSubmit(formData);
+        setIsLoading(false);
+    };
+
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center bg-[#f9fafc] overflow-hidden"> {/* Add overflow-hidden */}
+            <div className="min-h-screen w-full flex fixed items-center justify-center bg-[#f9fafc]">
                 <div className="absolute -right-60 -top-44 h-60 w-full transform-gpu md:right-0 bg-[linear-gradient(115deg,var(--tw-gradient-stops))] from-[#fff1be] from-[28%] via-[#ee87cb] via-[70%] to-[#b060ff] rotate-[-10deg] rounded-full blur-3xl"></div>
 
                 <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-sm z-10">
@@ -16,7 +41,7 @@ const Register = () => {
                         <p className="text-sm text-gray-600">Register to get started with your account.</p>
                     </div>
 
-                    <form className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-2">
                             <label htmlFor="name" className="text-sm font-medium text-gray-900">
                                 Name
@@ -24,6 +49,9 @@ const Register = () => {
                             <input
                                 id="name"
                                 type="text"
+                                name='name'
+                                value={formData.name}
+                                onChange={handleChange}
                                 placeholder="Enter your full name"
                                 className="w-full p-2 border border-gray-300 rounded-md"
                                 required
@@ -37,6 +65,9 @@ const Register = () => {
                             <input
                                 id="email"
                                 type="email"
+                                name='email'
+                                value={formData.email}
+                                onChange={handleChange}
                                 placeholder="Enter your email"
                                 className="w-full p-2 border border-gray-300 rounded-md"
                                 required
@@ -50,6 +81,9 @@ const Register = () => {
                             <input
                                 id="mobile"
                                 type="tel"
+                                name='mobile'
+                                value={formData.mobile}
+                                onChange={handleChange}
                                 placeholder="Enter your mobile number"
                                 className="w-full p-2 border border-gray-300 rounded-md"
                                 required
@@ -63,8 +97,11 @@ const Register = () => {
                             <select
                                 id="gender"
                                 className="w-full p-2 border border-gray-300 rounded-md"
+                                value={formData.gender}
+                                onChange={handleChange}
+                                name="gender"
                             >
-                                <option value="" disabled selected>
+                                <option value="" disabled>
                                     Select your gender
                                 </option>
                                 <option value="male">Male</option>
@@ -72,6 +109,7 @@ const Register = () => {
                                 <option value="other">Other</option>
                             </select>
                         </div>
+
 
                         <div className="flex items-center space-x-2">
                             <input
